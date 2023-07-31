@@ -1,0 +1,140 @@
+
+#include <iostream>
+
+int map[100][100];
+int current_X=0;
+int current_Y=34;
+int front=0;
+  int back=0;
+  int left=0;
+  int right=0;
+const int X=99;
+const int Y=50;
+
+void test(){
+  for(int y=0;y<100;y++){
+    for(int x=0;x<100;x++){
+     if(x>30 && x<70){map[y][x]=0;}else(map[y][x]=1);
+     
+      }
+    }
+    for(int i=29;i<60;i++){
+    map[10][i]=1;
+    }
+}
+
+void setup(){
+
+ for(int i=0;i<100;i++){
+    for(int l=0;l<100;l++){
+      map[i][l]=0;
+      
+      }
+    }
+  }
+
+void display(){
+  map[current_X][current_Y]=3;
+map[X][Y]=2;
+for(int i=0;i<100;i++){
+    for(int l=0;l<100;l++){
+      if(map[i][l]==0){std::cout<<' ';}
+       if(map[i][l]==1){std::cout<<"#";}
+       if(map[i][l]==2){std::cout<<"o";}
+       if(map[i][l]==3){std::cout<<"+";}
+       if(map[i][l]==4){std::cout<<"*";}
+       if(l==99){std::cout<<"\n";}
+    }
+  }
+}
+
+ void seek(){
+  int testx=0;
+  int testy=0;
+
+  testx=current_X;
+  testy=current_Y;
+    /*map[49][50]=1;
+    map[51][50]=1;
+    map[50][49]=1;
+    map[50][51]=1;*/
+while(map[testx][current_Y]==0){
+       testx=testx+1;
+       front++;
+       if(front>19){break;}
+    }
+ testx = current_X;
+
+while(map[testx][current_Y]==0){
+       testx=testx-1;
+       back++;
+       if(back>19){break;}
+    }
+    
+while(map[current_X][testy]==0){
+       testy=testy-1;
+       right++;
+       if(right>19){break;}
+    }
+ testy=current_Y;
+
+    while(map[current_X][testy]==0){
+       testy=testy+1;
+       left++;
+       if(left>19){break;}
+    }
+
+std::cout<<"f-"<<front<<"\n";
+std::cout<<"b-"<<back<<"\n";
+std::cout<<"l-"<<left<<"\n";
+std::cout<<"r-"<<right<<"\n";
+ }
+
+void wall(int x, int y){
+int refX =x;
+int refY =y;
+while(map[x][y]==1){
+y--;
+if(y<0){break;}
+}
+while(map[x][y]){
+  y++;
+  if(y>0){break;}
+}
+
+ }
+
+void plan(int from_x, int from_y,int to_x, int to_y){
+
+while(to_x-from_x!=0||to_y-from_y!=0){
+if(to_x-from_x>0){
+  map[from_x][from_y]=4;
+  from_x++;
+  if(to_y-from_y>0){from_y++;}
+  if(to_y-from_y<0){from_y--;}
+}
+if(to_y-from_x<0){
+  map[from_x][from_y]=4;
+  from_x++;
+   if(to_y-from_y>0){from_y++;}
+  if(to_y-from_y<0){from_y--;}
+  }
+ if(map[from_x][from_y]==1){
+wall(from_x,from_y);
+  }
+ }
+}
+ 
+
+int main(){
+setup();
+ test();
+ seek();
+if(front==1&&back==1&&left==1&&right==1){std::cout<<"fault-no exit"<<"\n";}
+
+//plan(current_X,current_Y,X,Y);
+display();
+
+
+}
+
